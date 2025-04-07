@@ -19,7 +19,7 @@ if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
 }
 
 print $generic_err;
-print "<form action=\"login-process.php\" method=\"POST\">";
+print "<form action=\"authenticate-action.php\" method=\"POST\">";
 print "Username: <input type=\"text\" name=\"username\"> " . $username_err . "<br>"; //error messages added to form elements to appear beside the input box.
 print "Password: <input type=\"password\" name=\"password\"> " . $password_err . "<br>";
 print "<input type=\"submit\" name=\"submit\">";
