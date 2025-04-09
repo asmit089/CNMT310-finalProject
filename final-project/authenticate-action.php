@@ -10,6 +10,7 @@ authenticates POST information sent from login.php
 session_start();
 //comment
 //check isset/empty for username & password $_POST
+//hii
 
 require_once("class/WebServiceClient.php");
 require_once("../../creds.php");
