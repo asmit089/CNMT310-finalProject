@@ -1,5 +1,12 @@
 <?php
 
+/*
+authenticate-action.php
+
+authenticates POST information sent from login.php
+
+*/
+
 session_start();
 
 //check isset/empty for username & password $_POST
@@ -17,18 +24,18 @@ $data = array("username" => "lowryp",
 $action = "authenticate";  //will change per web service (add bookmark, etc)
 
 $fields = array("apikey" => APIKEY,
-             "apihash" => APIHASH,
-			 "action" => $action,
-              "data" => $data
+                "apihash" => APIHASH,
+			          "action" => $action,
+                "data" => $data
              );
 $client->setPostFields($fields);
 $result = $client->send();
 
-
-
-$jsonResult = json_decode($result);  //tests JSON between services
-
+//debugging output (remove later)
 var_dump($result);
+
+//tests JSON between services
+$jsonResult = json_decode($result);  
 
 if (json_last_error() !== JSON_ERROR_NONE) {
 

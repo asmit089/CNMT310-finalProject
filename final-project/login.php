@@ -8,12 +8,13 @@ displays the login form to the user for CNMT310 final project
 It uses Page.php for the opening/closing html
 */
 
-namespace finalBookmarkProject;
+namespace finalBookmarkProject;     
+//i am adding a comment
 
 session_start();
 
 //using Page class
-require_once("Page.php");
+require_once("class/Page.php");
 require_once("actions/functions.php");
 $_SESSION['loggedIn'] = false;
 
