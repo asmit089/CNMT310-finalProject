@@ -8,7 +8,7 @@ authenticates POST information sent from login.php
 */
 
 session_start();
-
+//comment
 //check isset/empty for username & password $_POST
 
 require_once("class/WebServiceClient.php");
@@ -28,10 +28,14 @@ $fields = array("apikey" => APIKEY,
 			          "action" => $action,
                 "data" => $data
              );
-$client->setPostFields($fields);
+$client->setPostFields($fields); 
 $result = $client->send();
 
 //debugging output (remove later)
+var_dump($client);
+
+$jsonResult = json_decode($result);  //tests JSON between services
+
 var_dump($result);
 
 //tests JSON between services
