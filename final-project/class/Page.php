@@ -1,6 +1,7 @@
 <?php
 
-namespace MyNamespace;
+namespace finalBookmarkProject;
+
 /**
 *
 * Page class
