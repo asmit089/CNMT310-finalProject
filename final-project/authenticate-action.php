@@ -33,14 +33,12 @@ $client->setPostFields($fields);
 $result = $client->send();
 
 //debugging output (remove later)
-var_dump($client);
-
-$jsonResult = json_decode($result);  //tests JSON between services
-
-var_dump($result);
-
-//tests JSON between services
+//var_dump($client);
+//var_dump($result);
 $jsonResult = json_decode($result);  
+
+
+
 
 if (json_last_error() !== JSON_ERROR_NONE) {
 
@@ -50,4 +48,14 @@ if (json_last_error() !== JSON_ERROR_NONE) {
   exit;
 }
 
+
+if ($jsonResult->result == "Success") {
+  print("<div>It Printed Success</div>");
+} else {
+  print("<div>It Printed Denied</div>");
+}
+
+
+
+print("<br><br>");
 var_dump($jsonResult);  //can use web service stuff here
