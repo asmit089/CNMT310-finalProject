@@ -64,9 +64,9 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
-  print("<div>It Printed Success</div>");
+  print("<div id=" . "result" . ">It Printed Success</div>");
 } else {
-  print("<div>It Printed Denied</div>");
+  print("<div id=" . "result" . ">It Printed Denied</div>");
 }
 
 
