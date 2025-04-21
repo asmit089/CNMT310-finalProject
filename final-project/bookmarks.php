@@ -116,6 +116,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark')
 print $bookmarkspage->getTopSection();
 print "<h1>Bookmarks</h1>" . PHP_EOL;
 
+//grab user details from the login page via SESSION and display their name
+print "<div>Hello " . $_SESSION['userDetails']['name'] . "! </div>";
+print $_SESSION['userDetails']['email'];
+
 //CODE BODY GOES HERE - BOOKMARKS FORM + BUTTONS :)
 echo '<div id="bookmarks-container">';
     displayBookmarks();
