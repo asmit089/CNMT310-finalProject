@@ -18,6 +18,7 @@ session_start();
 //using Page and our functions class
 require_once("class/Page.php");
 require_once("actions/functions.php");
+require_once("../../creds.php");
 
 //connect to the web service
 $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
@@ -30,8 +31,8 @@ function callWebService($action, $data = []) {
     global $api_endpoint, $api_key, $api_hash;
 
     $post_data = json_encode([
-        'apikey' => $api_key,
-        'apihash' => $api_hash,
+        'apikey' => APIKEY,
+        'apihash' => APIHASH,
         'action' => $action,
         'data' => $data,
     ]);

@@ -62,10 +62,15 @@ if (json_last_error() !== JSON_ERROR_NONE) {
   exit;
 }
 
+//session variables to send to bookmarks page to display user name + email
 $_SESSION['userDetails'] = array();
 $_SESSION['userDetails']['name'] = $jsonResult->data->name;
 $_SESSION['userDetails']['email'] = $jsonResult->data->email;
 
+//session variables to send api key + hash to bookmarks
+//in bookmarks, api key + hash are used to access web service client
+$_SESSION['apikey'] = APIKEY;
+$_SESSION['apihash'] = APIHASH;
 
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
