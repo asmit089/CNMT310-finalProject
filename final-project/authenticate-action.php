@@ -62,13 +62,15 @@ if (json_last_error() !== JSON_ERROR_NONE) {
   exit;
 }
 
+$_SESSION['userDetails'] = array();
+$_SESSION['userDetails']['name'] = $jsonResult->data->name;
+$_SESSION['userDetails']['email'] = $jsonResult->data->email;
 
 
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
   //print("<div id=" . "result" . ">It Printed Success</div>");
   die(header("Location: bookmarks.php"));
-
 } else {
   //print("<div id=" . "result" . ">It Printed Denied</div>");
   $_SESSION['errors']['generic'] = "Login was Unsuccessful.";
