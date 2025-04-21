@@ -22,11 +22,15 @@ require_once("actions/functions.php");
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
 
-//ADD ERROR CHECKING/AUTHENTICATION HERE LATER
 
 //print beginning html and bookmarks header
 print $bookmarkspage->getTopSection();
-print "<h1>Bookmarks</h1>" . PHP_EOL;
+
+
+print "<div>Hello " . $_SESSION['userDetails']['name'] . "! </div>";
+print $_SESSION['userDetails']['email'];
+
+print "<h3>Bookmarks</h3>" . PHP_EOL;
 
 //CODE BODY GOES HERE - BOOKMARKS FORM + BUTTONS :)
 
