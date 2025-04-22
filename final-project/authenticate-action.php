@@ -62,21 +62,35 @@ if (json_last_error() !== JSON_ERROR_NONE) {
   exit;
 }
 
+//session variables to send to bookmarks page to display user name + email
+$_SESSION['userDetails'] = array();
+$_SESSION['userDetails']['name'] = $jsonResult->data->name;
+$_SESSION['userDetails']['email'] = $jsonResult->data->email;
+
+//session variables to send api key + hash to bookmarks
+//in bookmarks, api key + hash are used to access web service client
+$_SESSION['apikey'] = APIKEY;
+$_SESSION['apihash'] = APIHASH;
+
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
-  print("<div id=" . "result" . ">It Printed Success</div>");
+  //print("<div id=" . "result" . ">It Printed Success</div>");
+  die(header("Location: bookmarks.php"));
 } else {
-  print("<div id=" . "result" . ">It Printed Denied</div>");
+  //print("<div id=" . "result" . ">It Printed Denied</div>");
+  $_SESSION['errors']['generic'] = "Login was Unsuccessful.";
 }
 
-
-//random dump
-print("<br><br>");
-var_dump($jsonResult);  //can use web service stuff here
-print("<br>" . $_POST['username'] . "  " . $_POST['password']);
 
 
 //End of Isset and Empty error checks, sends user back to Login
 if (count($_SESSION['errors']) > 0) {
 	die(header("Location: login.php"));
 }
+
+
+
+//Debugging Code -- Unviewable if User continues to Bookmarks Page.
+print("<br><br>");
+var_dump($jsonResult);  //can use web service stuff here
+print("<br>" . $_POST['username'] . "  " . $_POST['password']);
