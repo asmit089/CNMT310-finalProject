@@ -1,0 +1,59 @@
+  /* login.php styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c1d6f7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #333;
+  }
+  
+  form {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form input[type="text"],
+  form input[type="password"] {
+    width: 70%;
+    padding: 8px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  form input[type="submit"] {
+    padding: 8px 16px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  form input[type="submit"]:hover {
+    background-color: #306acb;
+  }
+  
+  /* Error message styling */
+  #username,
+  #password {
+    color: red;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  
+    /* bookmark.php styling */
+  
+
+

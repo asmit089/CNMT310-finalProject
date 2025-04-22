@@ -21,6 +21,9 @@ $_SESSION['loggedIn'] = false;
 //print getTop("Login");   //functions.php -- can assign function to a variable, or just print it.
 //using Page class to create $loginpage
 $loginpage = new Page("Login");
+//css link
+$loginpage->addHeadElement("<link rel=\"stylesheet\" href=\"styles.css\">");
+$loginpage->prepareTopSection();
 
 $inputs = array("username","password","generic"); //this array holds names for specific error messages.
 foreach ($inputs as $inputname) {
@@ -38,8 +41,8 @@ print $loginpage->getTopSection();
 print "<h1>Login Page</h1>" . PHP_EOL;
 
 print $generic_err;
-print("<div id=" . "username" . ">" . $username_err . "</div>");
-print("<div id=" . "password" . ">" . $password_err . "</div>");
+print("<div id=\"username\">" . $username_err . "</div>");
+print("<div id=\"password\">" . $password_err . "</div>");
 print "<form action=\"authenticate-action.php\" method=\"POST\">";
 print "Username: <input type=\"text\" name=\"username\"> " . "<br>"; //error messages added to form elements to appear beside the input box.
 print "Password: <input type=\"password\" name=\"password\"> " . "<br>";
