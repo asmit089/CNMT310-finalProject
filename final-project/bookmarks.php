@@ -25,6 +25,7 @@ $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
 
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
+//$user_id = $_SESSION['userDetails']['userid'];
 
 // Function to interact with the web service
 function callWebService($action, $data = []) {
@@ -62,8 +63,8 @@ function callWebService($action, $data = []) {
 
 // Function to fetch and display bookmarks
 function displayBookmarks() {
-    global $user_id;
-    $response = callWebService('getbookmarks', ['user_id' => $user_id]);
+    //global $user_id;
+    $response = callWebService('getbookmarks', ['user_id' => $_SESSION['userDetails']['userid']]);
 
     $output = '';
 
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark')
         $add_data = [
             'url' => $url,
             'displayname' => $displayname,
-            'user_id' => $user_id,
+            'user_id' => $_SESSION['userDetails']['userid'],
         ];
         $add_response = callWebService('addbookmark', $add_data);
 

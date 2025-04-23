@@ -66,6 +66,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 $_SESSION['userDetails'] = array();
 $_SESSION['userDetails']['name'] = $jsonResult->data->name;
 $_SESSION['userDetails']['email'] = $jsonResult->data->email;
+$_SESSION['userDetails']['userid'] = $jsonResult->data->id;
 
 //session variables to send api key + hash to bookmarks
 //in bookmarks, api key + hash are used to access web service client
