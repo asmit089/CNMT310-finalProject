@@ -157,7 +157,7 @@ echo '</div>';
 
 //button to trigger logout.php
 //echo '<form id="add-bookmark-form" method="post" action="">';
-print '<form id = "logout-button-form" method="post" action="">';
+print '<form id = "logout-button-form" method="post" action="logout.php">';
 print "<button type='submit' name='logout'>Logout</button>";
 print"</form>";
 
