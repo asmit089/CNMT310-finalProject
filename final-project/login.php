@@ -40,13 +40,21 @@ if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
 print $loginpage->getTopSection();
 print "<h1>Login Page</h1>" . PHP_EOL;
 
-
 print "<form action=\"authenticate-action.php\" method=\"POST\">";
-print $generic_err . '<br><br>';
-print "Username: <input type=\"text\" name=\"username\"> " . "<br>"; //error messages added to form elements to appear beside the input box.
-print("<div id=\"username\">" . $username_err . "</div><br>");
+if (isset($generic_err) && $generic_err != "") {
+  print "<div class='error-message'>" . $generic_err . "</div>";
+}
+
+print "<div class=\"form-group\">";
+print "Username: <input type=\"text\" name=\"username\"> " . "<br>";
+print("<div id=\"username\">" . $username_err . "</div>");
+print "</div>";
+
+print "<div class=\"form-group\">";
 print "Password: <input type=\"password\" name=\"password\"> " . "<br>";
-print("<div id=\"password\">" . $password_err . "</div><br>");
+print("<div id=\"password\">" . $password_err . "</div>");
+print "</div>";
+
 print "<input type=\"submit\" name=\"submit\">";
 print "</form>";
 

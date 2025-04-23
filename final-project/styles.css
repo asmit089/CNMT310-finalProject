@@ -1,4 +1,3 @@
-/* login.php styling */
 
 body {
   background-image:url(https://th.bing.com/th/id/R.1ee114adf3f6f5d36fa03d98dd027595?rik=Z0uB2FeHhylfbQ&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f06%2fLight-Blue-HD-Backgrounds-Free-Download.jpg&ehk=A1oL99oIPNjoWoX7%2fJZhOrBh8TTdeatDhhq26OJaxJU%3d&risl=&pid=ImgRaw&r=0);
@@ -6,6 +5,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 body::after {
   content: '';
   position: absolute;
@@ -16,6 +16,7 @@ body::after {
   background-color: rgba(255, 255, 255, 0.75); 
   z-index: -1; 
 }
+/* Login Page Title*/
 h1 {
   background-color: #95c1df;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -23,18 +24,19 @@ h1 {
   text-align: center;
   margin-top: 13vw;
   color: #ffffff;
-  width: 23.25%; 
+  width: 19.4%; 
   margin-left: auto; 
   margin-right: auto; 
   padding: .4vw;
   border-radius: .5vw;
 }
 
-form {
-  max-width: 21vw;
+/* login.php styling */
+form:not(.logout-form) {
+  max-width: 18vw;  
   margin-left: auto;
   margin-right: auto;
-  padding: 1.5vw;
+  padding: 1vw;  
   background-color: white;
   border-radius: .5vw;
   border: 0.1vw solid #95c1df; 
@@ -43,25 +45,25 @@ form {
 form input[type="text"],
 form input[type="password"] {
   width: 100%;
-  margin-top: 2%;
-  padding: 2% 5%;
-  margin-bottom: 5%;
+  margin-top: 1.5%;  
+  padding: 2% 4%;  
+  margin-bottom: 3%;  
   border: 1px solid #95c1df;
   border-radius: .5vw;
   box-sizing: border-box;
-  font-size: .9vw;
+  font-size: .85vw;  
 }
 
 form input[type="submit"] {
   display: block;
-  margin: 5% auto 0; 
-  padding: 2% 7%; 
+  margin: 3% auto 0;  
+  padding: 2% 6%;  
   background-color: #95c1df;
   color: white;
   border: none;
   border-radius: 5vw; 
   cursor: pointer;
-  font-size: .95vw; 
+  font-size: .9vw;  
   transition: background-color 0.3s ease;
 }
 
@@ -69,14 +71,39 @@ form input[type="submit"]:hover {
   background-color: #3c6886;
 }
 
+form .error-message {
+  color: red;
+  font-size: 1vw; 
+  margin-bottom: 10px; 
+}
+
 /* Error message styling */
 #username,
 #password {
   color: red;
-  font-size: 0.9em;
+  font-size: 0.8em;
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 1vw; 
+ 
 }
 
+/* Bookmarks styling */
+.bookmark-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vw;
+  text-align: center;
+}
 
-/* bookmark.php styling */
+.bookmarks-title {
+  background-color: #95c1df;
+  color: #fff;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 2vw;
+  padding: 0.4vw 2vw;
+  border-radius: 0.5vw;
+  margin: 2vw auto; 
+  width: fit-content;
+}
+

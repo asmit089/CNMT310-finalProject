@@ -36,7 +36,7 @@ $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
 
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
-
+$bookmarkspage->addHeadElement("<link rel=\"stylesheet\" href=\"styles.css\">");
 
 // Function to interact with the web service
 function callWebService($action, $data = []) {
@@ -150,7 +150,8 @@ echo '</form>';"
 
 //print beginning html and bookmarks header
 print $bookmarkspage->getTopSection();
-print "<h1>Bookmarks</h1>" . PHP_EOL;
+echo '<div class="bookmark-wrapper">';
+echo '<h1 class="bookmarks-title">Bookmarks</h1>';
 
 //Eric's code for saying hi to user
 print "<div>Hello " . $_SESSION['userDetails']['name'] . "! </div>";
@@ -249,7 +250,7 @@ echo '</div>';
 
 //button to trigger logout.php
 print "<br><br><br>";
-print "<form method='post' action=\"logout.php\">";
+print "<form class=\"logout-form\" method='post' action=\"logout.php\">";
 print "<button type='submit' name='logout'>Logout</button>";
 print"</form>";
 
