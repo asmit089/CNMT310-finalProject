@@ -187,10 +187,28 @@ if ($_POST['action'] === 'showAdd') {
 }
 */
 
-$showAdd = isset($_GET['showAdd']) && $_GET['showAdd'] == 0;
+$form = isset($_GET['form']) && $_GET['form'] === "clear";
 
 echo '<h2>Add New Bookmark</h2>';
-if (!$showAdd) {
+if ($_GET['form'] === "clear") {
+    print '<a href="?form=add"><button type="button">Add</button></a>';
+    print '<a href="?form=delete"><button type="button">Delete</button></a>';
+    print "Cleared.";
+} elseif ($_GET['form'] === 'delete') {
+    print '<a href="?form=add"><button type="button">Add</button></a>';
+    print '<a href="?form=clear"><button type="button">Clear</button></a>';
+    print "Delete.";
+} elseif ($_GET['form'] === 'add') {
+    print '<a href="?form=delete"><button type="button">Delete</button></a>';
+    print '<a href="?form=clear"><button type="button">Clear</button></a>';
+    print "Add.";
+
+} else {
+    print '<a href="?form=add"><button type="button">Add</button></a>';
+    print '<a href="?form=delete"><button type="button">Delete</button></a>';
+    print "Cleared.";
+
+    /*
     echo '<a href="?showAdd=1"><button type="button">Show Add Bookmark Form</button></a>';
 
     echo '<form id="add-bookmark-form" method="post" action="">';
@@ -203,8 +221,7 @@ if (!$showAdd) {
     echo '<input type="hidden" name="action" value="addbookmark">';
     echo '<button type="submit">Add Bookmark</button>';
     echo '</form>';
-} else {
-    echo '<a href="?showAdd=0"><button type="button">Show Delete Bookmark Form</button></a>';
+    */
 }
 
 /*
