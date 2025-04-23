@@ -20,12 +20,19 @@ require_once("class/Page.php");
 require_once("actions/functions.php");
 require_once("../../creds.php");
 
+//Stopping the User if they are not logged in.
+if ($_SESSION['loggedIn'] == false || !isset($_SESSION['loggedIn']) ) { 
+	$_SESSION['errors']['generic'] = "Please Log In.";
+	die(header("Location: login.php"));
+}
+
+
 //connect to the web service
 $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
 
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
-//$user_id = $_SESSION['userDetails']['userid'];
+
 
 // Function to interact with the web service
 function callWebService($action, $data = []) {

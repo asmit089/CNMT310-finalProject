@@ -75,7 +75,7 @@ $_SESSION['apihash'] = APIHASH;
 
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
-  //print("<div id=" . "result" . ">It Printed Success</div>");
+  $_SESSION['loggedIn'] = true;
   die(header("Location: bookmarks.php"));
 } else {
   //print("<div id=" . "result" . ">It Printed Denied</div>");
