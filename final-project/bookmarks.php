@@ -26,6 +26,10 @@ if ($_SESSION['loggedIn'] == false || !isset($_SESSION['loggedIn']) ) {
 	die(header("Location: login.php"));
 }
 
+if (!isset($_POST['action'])) {
+    $_POST['action'] = "";
+}
+
 
 //connect to the web service
 $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
@@ -119,6 +123,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark')
     }
 }
 
+/*
+function showAddBookmarkForm() {
+    $output = "echo '<h2>Add New Bookmark</h2>';
+
+echo '<form id=\"add-bookmark-form\" method=\"post\" action="">';
+echo '<label for=\"url\">URL:</label><br>';
+echo '<input type=\"text\" id=\"url\" name=\"url\" required><br><br>';
+
+echo '<label for=\"displayname\">Display Name:</label><br>';
+echo '<input type=\"text\" id=\"displayname\" name=\"displayname\" required><br><br>';
+
+echo '<input type=\"hidden\" name=\"action\" value=\"addbookmark\">';
+echo '<button type=\"submit\">Add Bookmark</button>';
+echo '</form>';"
+
+    echo $output;
+
+}
+*/
+
+
+
+
 
 
 //print beginning html and bookmarks header
@@ -134,6 +161,53 @@ echo '<div id="bookmarks-container">';
     displayBookmarks();
 echo '</div>';
 
+/*
+echo '<h2>Add New Bookmark</h2>';
+print "<form method='post' action=''>";
+print "<input type='hidden' name='action' value='showAdd'>";
+print "<button type='submit' name='showAdd'>Add</button>";
+print"</form>";
+print "<form method='post' action=''>";
+print "<input type='hidden' name='action' value='hideAdd'>";
+print "<button type='submit' name='showAdd'>Hide</button>";
+print"</form>";
+
+if ($_POST['action'] === 'showAdd') {
+
+    echo '<form id="add-bookmark-form" method="post" action="">';
+    echo '<label for="url">URL:</label><br>';
+    echo '<input type="text" id="url" name="url" required><br><br>';
+
+    echo '<label for="displayname">Display Name:</label><br>';
+    echo '<input type="text" id="displayname" name="displayname" required><br><br>';
+
+    echo '<input type="hidden" name="action" value="addbookmark">';
+    echo '<button type="submit">Add Bookmark</button>';
+    echo '</form>';
+}
+*/
+
+$showAdd = isset($_GET['showAdd']) && $_GET['showAdd'] == 0;
+
+echo '<h2>Add New Bookmark</h2>';
+if (!$showAdd) {
+    echo '<a href="?showAdd=1"><button type="button">Show Add Bookmark Form</button></a>';
+
+    echo '<form id="add-bookmark-form" method="post" action="">';
+    echo '<label for="url">URL:</label><br>';
+    echo '<input type="text" id="url" name="url" required><br><br>';
+
+    echo '<label for="displayname">Display Name:</label><br>';
+    echo '<input type="text" id="displayname" name="displayname" required><br><br>';
+
+    echo '<input type="hidden" name="action" value="addbookmark">';
+    echo '<button type="submit">Add Bookmark</button>';
+    echo '</form>';
+} else {
+    echo '<a href="?showAdd=0"><button type="button">Show Delete Bookmark Form</button></a>';
+}
+
+/*
 echo '<h2>Add New Bookmark</h2>';
 
 echo '<form id="add-bookmark-form" method="post" action="">';
@@ -146,6 +220,7 @@ echo '<input type="text" id="displayname" name="displayname" required><br><br>';
 echo '<input type="hidden" name="action" value="addbookmark">';
 echo '<button type="submit">Add Bookmark</button>';
 echo '</form>';
+*/
 
 echo '<div id="response-message">';
     // Display any messages from the add bookmark action
@@ -156,7 +231,8 @@ echo '<div id="response-message">';
 echo '</div>';
 
 //button to trigger logout.php
-print '<form id = "logout-button-form" method="post" action="logout.php">';
+print "<br><br><br>";
+print "<form method='post' action=\"logout.php\">";
 print "<button type='submit' name='logout'>Logout</button>";
 print"</form>";
 
