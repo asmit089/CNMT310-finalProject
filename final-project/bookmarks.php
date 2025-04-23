@@ -155,5 +155,10 @@ echo '<div id="response-message">';
     }
 echo '</div>';
 
+//button to trigger logout.php
+print "<form method='post'>";
+print "<button type='submit' name='logout'>Logout</button>";
+print"</form>";
+
 //print ending html
 print $bookmarkspage->getBottomSection();
