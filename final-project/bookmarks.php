@@ -31,12 +31,14 @@ if (!isset($_POST['action'])) {
 }
 
 
+
 //connect to the web service
 $api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
 
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
 $bookmarkspage->addHeadElement("<link rel=\"stylesheet\" href=\"styles.css\">");
+
 
 
 // Handle the "addbookmark" form submission
@@ -68,6 +70,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark')
     }
 }
 
+// Handle Delete bookmark via GET link
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'deletebookmark') {
+    $bookmark_id = $_GET['bookmark_id'];
+
+    if (!empty($bookmark_id)) {
+        $delete_data = [
+            'bookmark_id' => $bookmark_id,
+            'user_id' => $_SESSION['userDetails']['userid'],
+        ];
+        $delete_response = callWebService('deletebookmark', $delete_data);
+
+        if ($delete_response['result'] === 'Success') {
+            $_SESSION['message'] = 'Bookmark deleted successfully!';
+            header("Location: " . strtok($_SERVER['REQUEST_URI'], '?')); // Refresh clean URL without query params
+            exit();
+        } else {
+            $_SESSION['message'] = 'Failed to delete bookmark. Details: ' . json_encode($delete_response['data']);
+            header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
+            exit();
+        }
+    } else {
+        $_SESSION['message'] = 'Invalid bookmark ID.';
+        header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
+        exit();
+    }
+}
+
+
 
 //print beginning html and bookmarks header
 print $bookmarkspage->getTopSection();
@@ -85,46 +115,23 @@ echo '</div>';
 
 
 
-$form = isset($_GET['form']) && $_GET['form'] === "clear";
-
-
 // Bookmark form displaying -- Might add functionality where "Delete" just deletes selected bookmarks in list.
 echo '<h2>Add New Bookmark</h2>';
-if ($_GET['form'] === "clear") {
-    
-    print '<a href="?form=add"><button type="button">Add</button></a>';
-    print '<a href="?form=delete"><button type="button">Delete</button></a>';
-    print "Cleared.";
 
-} elseif ($_GET['form'] === 'delete') {
+print '<br><br><br>';
 
-    print '<a href="?form=add"><button type="button">Add</button></a>';
-    print '<a href="?form=clear"><button type="button">Clear</button></a>';
-    print "Delete.";
+echo '<form id="add-bookmark-form" method="post" action="">';
+echo '<label for="url">URL:</label><br>';
+echo '<input type="text" id="url" name="url" required><br><br>';
 
-} elseif ($_GET['form'] === 'add') {
-    
-    print '<a href="?form=delete"><button type="button">Delete</button></a>';
-    print '<a href="?form=clear"><button type="button">Clear</button></a>';
-    print '<br><br><br>';
+echo '<label for="displayname">Display Name:</label><br>';
+echo '<input type="text" id="displayname" name="displayname" required><br><br>';
 
-    echo '<form id="add-bookmark-form" method="post" action="">';
-    echo '<label for="url">URL:</label><br>';
-    echo '<input type="text" id="url" name="url" required><br><br>';
+echo '<input type="hidden" name="action" value="addbookmark">';
+echo '<button type="submit">Add Bookmark</button>';
+echo '</form>';
 
-    echo '<label for="displayname">Display Name:</label><br>';
-    echo '<input type="text" id="displayname" name="displayname" required><br><br>';
 
-    echo '<input type="hidden" name="action" value="addbookmark">';
-    echo '<button type="submit">Add Bookmark</button>';
-    echo '</form>';
-    
-
-} else {
-    print '<a href="?form=add"><button type="button">Add</button></a>';
-    print '<a href="?form=delete"><button type="button">Delete</button></a>';
-    print "Cleared.";
-}
 
 echo '<div id="response-message">';
     // Display any messages from the add bookmark action

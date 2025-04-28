@@ -48,8 +48,18 @@ function displayBookmarks() {
     if ($response['result'] === 'Success' && is_array($response['data'])) {
         $output .= '<ul>';
         foreach ($response['data'] as $bookmark) {
-            $output .= '<li><a href="' . htmlspecialchars($bookmark['url']) . '">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')</li>';
-        }
+			$output .= '<li>';
+			$output .= '<a href="' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
+		
+			// Delete button as a link instead of a form
+			$output .= '
+				<a href="?action=deletebookmark&bookmark_id=' . urlencode($bookmark['bookmark_id']) . '" onclick="return confirm(\'Are you sure you want to delete this bookmark?\');">
+					<button type="button">Delete</button>
+				</a>
+			';
+		
+			$output .= '</li>';
+		}
         $output .= '</ul>';
     } else {
         $output .= '<p>No bookmarks found for this user.</p>';
