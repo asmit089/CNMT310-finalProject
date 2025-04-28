@@ -76,7 +76,7 @@ $_SESSION['apihash'] = APIHASH;
 //Checking JSON Object Variables
 if ($jsonResult->result == "Success") {
   $_SESSION['loggedIn'] = true;
-  die(header("Location: bookmarks.php"));
+  die(header("Location: bookmarks.php?form=clear"));
 } else {
   //print("<div id=" . "result" . ">It Printed Denied</div>");
   $_SESSION['errors']['generic'] = "Login was Unsuccessful.";
