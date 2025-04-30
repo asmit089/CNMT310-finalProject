@@ -107,3 +107,39 @@ form .error-message {
   width: fit-content;
 }
 
+#add-bookmark-form {
+  text-align: left;  
+}
+
+#add-bookmark-form button {
+  display: block;
+  margin: 3% auto 0;  
+  padding: 2% 6%;  
+  background-color: #95c1df;
+  color: white;
+  border: none;
+  border-radius: 5vw; 
+  cursor: pointer;
+  font-size: .9vw;  
+  transition: background-color 0.3s ease;
+}
+
+#add-bookmark-form button:hover {
+  background-color: #3c6886;
+}
+form.logout-form button {
+  display: block;
+  margin: 3% auto 0;  
+  padding: 4% 8%;  
+  background-color: #7ca3bd;
+  color: white;
+  border: none;
+  border-radius: .5vw;
+  cursor: pointer;
+  font-size: .9vw;  
+  transition: background-color 0.3s ease;
+}
+
+form.logout-form button:hover {
+  background-color: #3c6886;
+}
