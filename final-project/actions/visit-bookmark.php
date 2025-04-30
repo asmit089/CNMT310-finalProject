@@ -1,10 +1,17 @@
 <?php
 namespace finalBookmarkProject;
 
+/*
+this file processes a user clicking on their saved bookmark
+and then uses the web service to increment the visit count by one each time
+before this, it checks if the user is logged in, 
+the bookmark id is set, and that the id is a numeric value
+*/
+
 session_start();
 
 require_once("functions.php");
-require_once("../../creds.php");
+require_once("../../../creds.php");
 
 // Ensure the user is logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
@@ -12,67 +19,64 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
     die(header("Location: ../login.php"));
 }
 
-//if bookmark is set, then grab information
-if (isset($_GET['bookmark_id'])) {
-    $bookmark_id = $_GET['bookmark_id'];
-    $user_id = $_SESSION['userDetails']['userid'];
+//user id and bookmark id information
+$user_id_to_get = $_SESSION['userDetails']['userid'];
+$bookmark_id_to_get = $_GET['id']; 
 
-    if (!empty($bookmark_id) && !empty($user_id)) {
-        $addvisit_data = [
-            'bookmark_id' => $bookmark_id,
-            'user_id' => $user_id,
+
+//isset/empty for $_GET['id'] from bookmark coming in 
+if (!isset($_GET['id']) || $_GET['id'] == false) {
+    $_SESSION['errors']['generic'] = "Bookmark is not set.";
+    die(header("Location: ../bookmarks.php"));
+}
+
+//check isnumeric for id coming in
+//if this statement passes, the id is valid and we're moving on
+if(is_numeric($_GET['id'])){
+    //call getbookmark() from web service (SINGULAR! DIFFERENT THAN getBookmarkS()!!)
+    // Call addvisit() to increment the visit count
+    $addvisit_data = [
+        'bookmark_id' => $bookmark_id_to_get,
+        'user_id' => $user_id_to_get,
+    ];
+    //holds response from web service call
+    $addvisit_response = callWebService('addvisit', $addvisit_data);
+
+    //if this call was succesful, then move on
+    if ($addvisit_response['result'] === 'Success') {
+        // Now, retrieve the bookmark details to get the URL for redirection
+        $getbookmark_data = [
+            'user_id' => $user_id_to_get,
+            'bookmark_id' => $bookmark_id_to_get,
         ];
-        $addvisit_response = callWebService('addvisit', $addvisit_data);
+        $getbookmark_response = callWebService('getbookmark', $getbookmark_data);
 
-        if ($addvisit_response['result'] === 'Success') {
-            // Assuming your displayBookmarks function fetches the 'url'
-            // along with other bookmark details. You'll need to make
-            // sure that URL is accessible here.
-            // For now, let's assume you can fetch the URL based on $bookmark_id.
-            $bookmark_url = getBookmarkURL($bookmark_id); // You'll need to implement this function
-
-            if ($bookmark_url) {
-                header("Location: " . $bookmark_url);
-                exit();
-            } else {
-                $_SESSION['message'] = 'Error: Could not retrieve bookmark URL.';
-                header("Location: bookmarks.php"); // Redirect back to bookmarks page
-                exit();
-            }
+        if ($getbookmark_response['result'] === 'Success' && isset($getbookmark_response['data']['url'])) {
+            // Redirect to the actual bookmark URL
+            die(header("Location: " . $getbookmark_response['data']['url']));
         } else {
-            $_SESSION['message'] = 'Failed to record visit. Details: ' . json_encode($addvisit_response['data']);
-            header("Location: bookmarks.php"); // Redirect back to bookmarks page
+            // Handle the case where retrieving the bookmark URL failed
+            $_SESSION['message'] = "Failed to retrieve bookmark URL.";
+            header("Location: ../bookmarks.php");
             exit();
         }
     } else {
-        $_SESSION['message'] = 'Invalid bookmark ID.';
-        header("Location: bookmarks.php"); // Redirect back to bookmarks page
+        
+        var_dump($addvisit_response);
+
+        /*
+        // Handle the case where adding the visit failed
+        $_SESSION['message'] = "Failed to record visit.";
+        header("Location: ../bookmarks.php");
         exit();
+        */
     }
-} else {
-    $_SESSION['message'] = 'No bookmark ID provided.';
-    header("Location: bookmarks.php"); // Redirect back to bookmarks page
-    exit();
+
 }
-
-// You'll need to implement a function to fetch the bookmark URL
-// based on the bookmark_id from your data source (likely a database)
-function getBookmarkURL($bookmark_id) {
-    // Replace this with your actual database query to fetch the URL
-    // based on the $bookmark_id.
-    // Example (assuming you have a database connection established elsewhere):
-    global $pdo; // Assuming you have a PDO connection
-
-    $stmt = $pdo->prepare("SELECT url FROM bookmarks WHERE bookmark_id = :bookmark_id AND user_id = :user_id");
-    $stmt->bindParam(':bookmark_id', $bookmark_id);
-    $stmt->bindParam(':user_id', $_SESSION['userDetails']['userid']);
-    $stmt->execute();
-    $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-    if ($result && isset($result['url'])) {
-        return $result['url'];
-    }
-    return false;
+else{
+    //else, the id wasn't valid and we cannot continue. display error to user on bookmarks page
+    $_SESSION['errors']['generic'] = "Bookmark is not valid.";
+    die(header("Location: ../bookmarks.php"));
 }
 
 ?>

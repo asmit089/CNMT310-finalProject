@@ -49,8 +49,10 @@ function displayBookmarks() {
         $output .= '<ul>';
         foreach ($response['data'] as $bookmark) {
 			$output .= '<li>';
-			$output .= '<a href="' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
+			$output .= '<a href="' . 'actions/visit-bookmark.php?id=' . htmlspecialchars($bookmark['bookmark_id']) . '&burl=' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
 		
+            //$output .= '<a href="' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
+
 			// Delete button as a link instead of a form
 			$output .= '
 				<a href="?action=deletebookmark&bookmark_id=' . urlencode($bookmark['bookmark_id']) . '" onclick="return confirm(\'Are you sure you want to delete this bookmark?\');">
