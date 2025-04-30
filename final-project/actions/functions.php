@@ -49,7 +49,7 @@ function displayBookmarks() {
         $output .= '<ul>';
         foreach ($response['data'] as $bookmark) {
 			$output .= '<li>';
-			$output .= '<a href="' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
+			$output .= '<a href="' . 'visit-bookmark.php?id=' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
 		
 			// Delete button as a link instead of a form
 			$output .= '

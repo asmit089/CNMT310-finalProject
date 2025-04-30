@@ -56,13 +56,13 @@ if(is_numeric($_GET['id'])){
             die(header("Location: " . $getbookmark_response['data']['url']));
         } else {
             // Handle the case where retrieving the bookmark URL failed
-            $_SESSION['errors']['generic'] = "Failed to retrieve bookmark URL.";
+            $_SESSION['message'] = "Failed to retrieve bookmark URL.";
             header("Location: ../bookmarks.php");
             exit();
         }
     } else {
         // Handle the case where adding the visit failed
-        $_SESSION['errors']['generic'] = "Failed to record visit.";
+        $_SESSION['message'] = "Failed to record visit.";
         header("Location: ../bookmarks.php");
         exit();
     }
