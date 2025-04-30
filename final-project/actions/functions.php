@@ -3,14 +3,15 @@
 // running session_start inside of a file containing your functions, it gets started all of the time.
 // creates a choice architecturally on how to develop applications
 
+session_start();
 
 // Function to interact with the web service
 function callWebService($action, $data = []) {
     global $api_endpoint, $api_key, $api_hash;
 
     $post_data = json_encode([
-        'apikey' => APIKEY,
-        'apihash' => APIHASH,
+        'apikey' => $_SESSION['apikey'],
+        'apihash' => $_SESSION['apihash'],
         'action' => $action,
         'data' => $data,
     ]);

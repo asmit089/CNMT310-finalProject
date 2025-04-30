@@ -19,25 +19,26 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
     die(header("Location: ../login.php"));
 }
 
-//user id and bookmark id information
-$user_id_to_get = $_SESSION['userDetails']['userid'];
-$bookmark_id_to_get = $_GET['id']; 
-
-
 //isset/empty for $_GET['id'] from bookmark coming in 
-if (!isset($_GET['id']) || $_GET['id'] == false) {
-    $_SESSION['errors']['generic'] = "Bookmark is not set.";
+if (!isset($_GET['id']) || !isset($_GET['burl'])) {
+    $_SESSION['message'] = "Bookmark is not set.";
     die(header("Location: ../bookmarks.php"));
 }
 
+//user id and bookmark id information
+$user_id_to_get = $_SESSION['userDetails']['userid'];
+$bookmark_id_to_get = $_GET['id'];
+$bookmark_url_to_get = $_GET['burl']; 
+
+
 //check isnumeric for id coming in
 //if this statement passes, the id is valid and we're moving on
-if(is_numeric($_GET['id'])){
+if(isset($_GET['id'])){
     //call getbookmark() from web service (SINGULAR! DIFFERENT THAN getBookmarkS()!!)
     // Call addvisit() to increment the visit count
     $addvisit_data = [
-        'bookmark_id' => $bookmark_id_to_get,
-        'user_id' => $user_id_to_get,
+        'bookmark_id' => $_GET['id'],
+        'user_id' => $_SESSION['userDetails']['userid'],
     ];
     //holds response from web service call
     $addvisit_response = callWebService('addvisit', $addvisit_data);
@@ -45,25 +46,17 @@ if(is_numeric($_GET['id'])){
     //if this call was succesful, then move on
     if ($addvisit_response['result'] === 'Success') {
         // Now, retrieve the bookmark details to get the URL for redirection
-        $getbookmark_data = [
-            'user_id' => $user_id_to_get,
-            'bookmark_id' => $bookmark_id_to_get,
-        ];
-        $getbookmark_response = callWebService('getbookmark', $getbookmark_data);
 
-        if ($getbookmark_response['result'] === 'Success' && isset($getbookmark_response['data']['url'])) {
-            // Redirect to the actual bookmark URL
-            die(header("Location: " . $getbookmark_response['data']['url']));
-        } else {
-            // Handle the case where retrieving the bookmark URL failed
-            $_SESSION['message'] = "Failed to retrieve bookmark URL.";
-            header("Location: ../bookmarks.php");
-            exit();
-        }
+        var_dump($addvisit_response);
+        //die(header("Location:" . $bookmark_url_to_get));
+        
     } else {
         
-        var_dump($addvisit_response);
+        //die(header("Location:" . $bookmark_url_to_get));
+        var_dump($addvisit_response) . '<br>';
 
+        print($bookmark_id_to_get) . '<br>';
+        print($bookmark_url_to_get);
         /*
         // Handle the case where adding the visit failed
         $_SESSION['message'] = "Failed to record visit.";
@@ -72,11 +65,10 @@ if(is_numeric($_GET['id'])){
         */
     }
 
-}
-else{
-    //else, the id wasn't valid and we cannot continue. display error to user on bookmarks page
-    $_SESSION['errors']['generic'] = "Bookmark is not valid.";
-    die(header("Location: ../bookmarks.php"));
+    } else {
+        //else, the id wasn't valid and we cannot continue. display error to user on bookmarks page
+        $_SESSION['message'] = "Bookmark is not valid.";
+        die(header("Location: ../bookmarks.php"));
 }
 
 ?>
