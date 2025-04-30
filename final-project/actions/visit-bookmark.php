@@ -11,7 +11,7 @@ the bookmark id is set, and that the id is a numeric value
 session_start();
 
 require_once("functions.php");
-require_once("../../creds.php");
+require_once("../../../creds.php");
 
 // Ensure the user is logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
@@ -20,7 +20,7 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
 }
 
 //user id and bookmark id information
-$user_id_to_get => $_SESSION['userDetails']['userid'];
+$user_id_to_get = $_SESSION['userDetails']['userid'];
 $bookmark_id_to_get = $_GET['id']; 
 
 
@@ -61,10 +61,15 @@ if(is_numeric($_GET['id'])){
             exit();
         }
     } else {
+        
+        var_dump($addvisit_response);
+
+        /*
         // Handle the case where adding the visit failed
         $_SESSION['message'] = "Failed to record visit.";
         header("Location: ../bookmarks.php");
         exit();
+        */
     }
 
 }
