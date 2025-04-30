@@ -67,9 +67,6 @@ if(is_numeric($_GET['id'])){
         exit();
     }
 
-    //redirect to actual bookmark url here
-    //use die header like in previous labs
-    //die(header(user bookmark url here));
 }
 else{
     //else, the id wasn't valid and we cannot continue. display error to user on bookmarks page
