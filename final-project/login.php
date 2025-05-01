@@ -11,23 +11,26 @@ It uses Page.php for the opening/closing html
 namespace finalBookmarkProject;     
 //i am adding a comment
 
-session_start();
+
+//Session was not needed due to being active inside of functions //session_start();
+
 
 //using Page class
 require_once("class/Page.php");
 require_once("actions/functions.php");
 $_SESSION['loggedIn'] = false;
 
-//print getTop("Login");   //functions.php -- can assign function to a variable, or just print it.
-//using Page class to create $loginpage
+
+//using Page class to create $loginpage with proper CSS.
 $loginpage = new Page("Login");
-//css link
 $loginpage->addHeadElement("<link rel=\"stylesheet\" href=\"styles.css\">");
 $loginpage->prepareTopSection();
 
-$inputs = array("username","password","generic"); //this array holds names for specific error messages.
+
+//Error message handling
+$inputs = array("username","password","generic");
 foreach ($inputs as $inputname) {
-  ${$inputname . "_err"} = ""; //creating a variable with a dynamic name.
+  ${$inputname . "_err"} = "";
 }
 if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
   foreach ($_SESSION['errors'] as $field => $error) {
@@ -36,7 +39,8 @@ if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
   $_SESSION['errors'] = array();
 }
 
-//print beginning html and login page title
+
+//Login page creation using Page & creating login form.
 print $loginpage->getTopSection();
 print "<h1>Login Page</h1>" . PHP_EOL;
 
@@ -58,5 +62,4 @@ print "</div>";
 print "<input type=\"submit\" name=\"submit\">";
 print "</form>";
 
-//print ending html
 print $loginpage->getBottomSection();

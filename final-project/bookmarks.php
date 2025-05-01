@@ -13,7 +13,9 @@ User comes in from login page and will pass in session variable to determine val
 
 namespace finalBookmarkProject; 
 
-session_start();
+
+//Session was not needed due to being active inside of functions //session_start();
+
 
 //using Page and our functions class
 require_once("class/Page.php");
@@ -31,9 +33,6 @@ if (!isset($_POST['action'])) {
 }
 
 
-
-//connect to the web service
-$api_endpoint = 'https://cnmt310.classconvo.com/bookmarks/';
 
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
@@ -56,18 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark')
 
         if ($add_response['result'] === 'Success' && isset($add_response['data']['bookmark_id'])) {
             $_SESSION['message'] = 'Bookmark added successfully!';
-            header("Location: " . $_SERVER['PHP_SELF']); // Redirect to refresh and potentially see updated bookmarks
-            exit();
+
         } else {
             $_SESSION['message'] = 'Failed to add bookmark. Details: ' . json_encode($add_response['data']);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+
         }
-    } else {
-        $_SESSION['message'] = 'Please fill in both the URL and Display Name.';
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
     }
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 // Handle Delete bookmark via GET link
@@ -83,18 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
 
         if ($delete_response['result'] === 'Success') {
             $_SESSION['message'] = 'Bookmark deleted successfully!';
-            header("Location: " . strtok($_SERVER['REQUEST_URI'], '?')); // Refresh clean URL without query params
-            exit();
         } else {
             $_SESSION['message'] = 'Failed to delete bookmark. Details: ' . json_encode($delete_response['data']);
-            header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
-            exit();
         }
-    } else {
-        $_SESSION['message'] = 'Invalid bookmark ID.';
-        header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
-        exit();
     }
+    header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
+    exit();
 }
 
 
@@ -111,7 +100,7 @@ print $_SESSION['userDetails']['email'];
 //CODE BODY GOES HERE - BOOKMARKS FORM + BUTTONS :)
 echo '<div id="bookmarks-container">';
     displayBookmarks();
-echo '</div>';
+echo '</div>' . '<br>';
 
 
 
@@ -127,7 +116,7 @@ echo '<input type="text" id="displayname" name="displayname" required><br><br>';
 
 echo '<input type="hidden" name="action" value="addbookmark">';
 echo '<button type="submit">Add Bookmark</button>';
-echo '</form>';
+echo '</form>' . '<br>';
 
 
 
@@ -140,9 +129,8 @@ echo '<div id="response-message">';
 echo '</div>';
 
 //button to trigger logout.php
-print "<br><br><br>";
-print "<form class=\"logout-form\" method='post' action=\"logout.php\">";
-print "<button type='submit' name='logout'>Logout</button>";
+print "<br><br><br>" . "<form class=\"logout-form\" method='post' action=\"logout.php\">";
+print "<button type='submit' name='logout'> Logout </button>";
 print"</form>";
 
 //print ending html

@@ -8,8 +8,6 @@ authenticates POST information sent from login.php
 */
 
 session_start();
-//comment
-//hii
 
 require_once("class/WebServiceClient.php");
 require_once("../../creds.php");
@@ -44,54 +42,39 @@ $fields = array("apikey" => APIKEY,
 $client->setPostFields($fields); 
 $result = $client->send();
 
-//debugging output (remove later)
-//var_dump($client);
-//var_dump($result);
-
 //full Decode
 $jsonResult = json_decode($result);  
 
 
 
 //Checking for JSON Errors
-if (json_last_error() !== JSON_ERROR_NONE) {
+if (json_last_error() !== JSON_ERROR_NONE || !isset($jsonResult->result)) {
+  
+  $_SESSION['errors']['generic'] = "Authentication Error.";
+  die(header("Location: login.php"));
 
-  //may want to redirect if JSON is wrong
-  print "Result is not JSON";
-  var_dump($jsonResult);
-  exit;
 }
 
-//session variables to send to bookmarks page to display user name + email
-$_SESSION['userDetails'] = array();
-$_SESSION['userDetails']['name'] = $jsonResult->data->name;
-$_SESSION['userDetails']['email'] = $jsonResult->data->email;
-$_SESSION['userDetails']['userid'] = $jsonResult->data->id;
 
-//session variables to send api key + hash to bookmarks
-//in bookmarks, api key + hash are used to access web service client
-$_SESSION['apikey'] = APIKEY;
-$_SESSION['apihash'] = APIHASH;
-
-//Checking JSON Object Variables
-if ($jsonResult->result == "Success") {
+//Checking JSON Object Variables - Variables stored in here for security.
+if ($jsonResult->result === "Success" && isset($jsonResult->data)) {
+  
   $_SESSION['loggedIn'] = true;
-  die(header("Location: bookmarks.php?form=clear"));
+  $_SESSION['userDetails'] = [
+    "name" => $jsonResult->data->name,
+    "email" => $jsonResult->data->email,
+    "userid" => $jsonResult->data->id,
+  ];
+  $_SESSION['apikey'] = APIKEY;
+  $_SESSION['apihash'] = APIHASH;
+  die(header("Location: bookmarks.php"));
+
 } else {
-  //print("<div id=" . "result" . ">It Printed Denied</div>");
   $_SESSION['errors']['generic'] = "Login was Unsuccessful.";
+
 }
-
-
 
 //End of Isset and Empty error checks, sends user back to Login
 if (count($_SESSION['errors']) > 0) {
 	die(header("Location: login.php"));
 }
-
-
-
-//Debugging Code -- Unviewable if User continues to Bookmarks Page.
-print("<br><br>");
-var_dump($jsonResult);  //can use web service stuff here
-print("<br>" . $_POST['username'] . "  " . $_POST['password']);

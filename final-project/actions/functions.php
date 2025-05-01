@@ -7,8 +7,8 @@ session_start();
 
 // Function to interact with the web service
 function callWebService($action, $data = []) {
-    global $api_endpoint, $api_key, $api_hash;
 
+    $url = 'https://cnmt310.classconvo.com/bookmarks/';
     $post_data = json_encode([
         'apikey' => $_SESSION['apikey'],
         'apihash' => $_SESSION['apihash'],
@@ -16,7 +16,7 @@ function callWebService($action, $data = []) {
         'data' => $data,
     ]);
 
-    $ch = curl_init($api_endpoint);
+    $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
@@ -41,25 +41,28 @@ function callWebService($action, $data = []) {
 
 // Function to fetch and display bookmarks
 function displayBookmarks() {
-    //global $user_id;
-    $response = callWebService('getbookmarks', ['user_id' => $_SESSION['userDetails']['userid']]);
 
+    $response = callWebService('getbookmarks', ['user_id' => $_SESSION['userDetails']['userid']]);
     $output = '';
 
     if ($response['result'] === 'Success' && is_array($response['data'])) {
         $output .= '<ul>';
         foreach ($response['data'] as $bookmark) {
-			$output .= '<li>';
-			$output .= '<a href="' . 'actions/visit-bookmark.php?id=' . htmlspecialchars($bookmark['bookmark_id']) . '&burl=' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
-		
-            //$output .= '<a href="' . htmlspecialchars($bookmark['url']) . '" target="_blank">' . htmlspecialchars($bookmark['displayname']) . '</a> (Visits: ' . htmlspecialchars($bookmark['visits']) . ')';
+			
+            $id = htmlspecialchars($bookmark['bookmark_id']);
+            $url = htmlspecialchars($bookmark['url']);
+            $dname = htmlspecialchars($bookmark['displayname']);
+            $visits = htmlspecialchars($bookmark['visits']);
+            
+            $output .= '<li>';
+			$output .= '<a href="' . 'actions/visit-bookmark.php?id=' . $id . '&burl=' . $url . '" target="_blank">' . $dname . '</a> (Visits: ' . $visits . ')';
+		 
 
 			// Delete button as a link instead of a form
 			$output .= '
 				<a href="?action=deletebookmark&bookmark_id=' . urlencode($bookmark['bookmark_id']) . '" onclick="return confirm(\'Are you sure you want to delete this bookmark?\');">
 					<button type="button">Delete</button>
-				</a>
-			';
+				</a>';
 		
 			$output .= '</li>';
 		}
