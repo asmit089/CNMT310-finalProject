@@ -1,4 +1,14 @@
 <?php
+
+/*
+logout.php
+
+file to log user out of the bookmarks (landing) page
+following best practices
+*/
+
+namespace finalBookmarkProject; 
+
 	//user clicked log out button
     if (isset($_POST['logout'])) {
 		//if loggedIn, make not loggedIn
