@@ -16,7 +16,9 @@ namespace finalBookmarkProject;
 
 //Session was not needed due to being active inside of functions //session_start();
 
-
+//keeping require_once here in code structure despite calling this before isset/empty
+//BECAUSE we moved session_start() to functions.php, would rather keep all require_once calls together
+//for increased readability
 //using Page and our functions class
 require_once("class/Page.php");
 require_once("actions/functions.php");
@@ -32,13 +34,9 @@ if (!isset($_POST['action'])) {
     $_POST['action'] = "";
 }
 
-
-
 //using Page class to create $bookmarkspage
 $bookmarkspage = new Page("Bookmarks");
 $bookmarkspage->addHeadElement("<link rel=\"stylesheet\" href=\"styles.css\">");
-
-
 
 // Handle the "addbookmark" form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addbookmark') {
