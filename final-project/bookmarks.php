@@ -104,7 +104,6 @@ echo '</div>' . '<br>';
 
 
 // Bookmark form displaying -- Might add functionality where "Delete" just deletes selected bookmarks in list.
-// action=""
 echo '<form id="add-bookmark-form" method="post">';
 echo '<h2 class="add-bookmark-title">Add New Bookmark</h2>';
 
