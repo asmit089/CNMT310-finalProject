@@ -10,23 +10,21 @@ the bookmark id is set, and that the id is a numeric value
 
 session_start();
 
-//check is set and empty before we bring in more code 
-require_once("functions.php");
-require_once("../../../creds.php");
-
-
 // Ensure the user is logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
     $_SESSION['errors']['generic'] = "Please Log In.";
     die(header("Location: ../login.php"));
 }
 
-
 //isset/empty for $_GET['id'] from bookmark coming in 
 if (!isset($_GET['id']) || !isset($_GET['burl'])) {
     $_SESSION['message'] = "Bookmark is not set.";
     die(header("Location: ../bookmarks.php"));
 }
+
+//check is set and empty before we bring in more code 
+require_once("functions.php");
+require_once("../../../creds.php");
 
 
 if(isset($_GET['id'])){
