@@ -1,5 +1,13 @@
 <?php
 
+/*
+functions.php
+
+we created these functions to call the web service, 
+and to display bookmarks after they are fetched from the web service
+
+*/
+
 // running session_start inside of a file containing your functions, it gets started all of the time.
 // creates a choice architecturally on how to develop applications
 
