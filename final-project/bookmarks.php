@@ -127,13 +127,13 @@ echo '<div id="response-message">';
     }
 echo '</div>';
 
-//end bookmark-wrapper div class
-echo '</div>';
-
 //button to trigger logout.php
 print "<br><br><br>" . "<form class=\"logout-form\" method='post' action=\"logout.php\">";
 print "<button type='submit' name='logout'> Logout </button>";
 print"</form>";
+
+//end bookmark-wrapper div class
+echo '</div>';
 
 //print ending html
 print $bookmarkspage->getBottomSection();
