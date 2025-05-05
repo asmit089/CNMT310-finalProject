@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
 
 //print beginning html and bookmarks header
 print $bookmarkspage->getTopSection();
+//start bookmark-wrapper div class
 echo '<div class="bookmark-wrapper">';
 echo '<h1 class="bookmarks-title">Bookmarks</h1>';
 
@@ -124,6 +125,9 @@ echo '<div id="response-message">';
         echo '<p>' . $_SESSION['message'] . '</p>';
         unset($_SESSION['message']); // Clear the message after displaying
     }
+echo '</div>';
+
+//end bookmark-wrapper div class
 echo '</div>';
 
 //button to trigger logout.php
