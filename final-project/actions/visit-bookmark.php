@@ -10,6 +10,7 @@ the bookmark id is set, and that the id is a numeric value
 
 session_start();
 
+//check is set and empty before we bring in more code 
 require_once("functions.php");
 require_once("../../../creds.php");
 
