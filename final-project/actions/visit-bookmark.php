@@ -11,7 +11,7 @@ the bookmark id is set, and that the id is a numeric value
 session_start();
 
 // Ensure the user is logged in
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
+if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) {
     $_SESSION['errors']['generic'] = "Please Log In.";
     die(header("Location: ../login.php"));
 }
@@ -27,28 +27,21 @@ require_once("functions.php");
 require_once("../../../creds.php");
 
 
-if(isset($_GET['id'])){
+$addvisit_data = [
+    'bookmark_id' => $_GET['id'],
+    'user_id' => $_SESSION['userDetails']['userid'],
+];
 
-    $addvisit_data = [
-        'bookmark_id' => $_GET['id'],
-        'user_id' => $_SESSION['userDetails']['userid'],
-    ];
+$addvisit_response = callWebService('addvisit', $addvisit_data);
 
-    $addvisit_response = callWebService('addvisit', $addvisit_data);
-
-    //if this call was succesful, then move on
-    if ($addvisit_response['result'] === 'Success') {
-        die(header("Location: " . $_GET['burl']));
+//if this call was succesful, then move on
+if ($addvisit_response['result'] === 'Success') {
+    die(header("Location: " . $_GET['burl']));
         
-    } else {
-        $_SESSION['message'] = "Failed to record visit.";
-        die(header("Location: ../bookmarks.php"));
-    }
-
-    } else {
-        //else, the id wasn't valid and we cannot continue. display error to user on bookmarks page
-        $_SESSION['message'] = "Bookmark is not valid.";
-        die(header("Location: ../bookmarks.php"));
+} else {
+    $_SESSION['message'] = "Failed to record visit.";
+    die(header("Location: ../bookmarks.php"));
 }
+
 
 ?>

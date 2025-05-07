@@ -132,8 +132,7 @@ print "<br><br><br>" . "<form class=\"logout-form\" method='post' action=\"logou
 print "<button type='submit' name='logout'> Logout </button>";
 print"</form>";
 
-//end bookmark-wrapper div class
-echo '</div>';
+echo '</div>'; //end bookmark-wrapper div class
 
 //print ending html
 print $bookmarkspage->getBottomSection();
